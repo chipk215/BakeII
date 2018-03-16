@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -79,7 +80,10 @@ public class StepDetailFragment extends Fragment {
 
 
     @BindView(R.id.step_description_tv)TextView mDescriptionTextView;
+
+    @Nullable
     @BindView(R.id.prev_button)Button mPreviousButton;
+    @Nullable
     @BindView(R.id.next_button)Button mNextButton;
     @BindView(R.id.video_view) SimpleExoPlayerView mPlayerView;
 
@@ -130,23 +134,27 @@ public class StepDetailFragment extends Fragment {
         mDescriptionTextView.setText(mStep.getDescription());
 
 
-        mPreviousButton.setEnabled(mPreviousEnable);
+        if (mPreviousButton != null) {
+            mPreviousButton.setEnabled(mPreviousEnable);
+            mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mHostActivityCallback.onPreviousSelected();
+                }
+            });
+        }
 
-        mNextButton.setEnabled(mNextEnable);
 
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHostActivityCallback.onPreviousSelected();
-            }
-        });
+        if (mNextButton!= null){
+            mNextButton.setEnabled(mNextEnable);
+            mNextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mHostActivityCallback.onNextSelected();
+                }
+            });
+        }
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHostActivityCallback.onNextSelected();
-            }
-        });
 
 
         if (savedInstanceState != null){
@@ -240,6 +248,7 @@ public class StepDetailFragment extends Fragment {
                     new DefaultTrackSelector(), new DefaultLoadControl());
 
             mPlayerView.setPlayer(mPlayer);
+            mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
 
             mPlayer.setPlayWhenReady(mPlayWhenReady);
             mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
