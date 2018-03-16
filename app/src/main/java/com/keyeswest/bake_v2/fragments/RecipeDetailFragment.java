@@ -7,13 +7,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.IngredientsAdapter;
+import com.keyeswest.bake_v2.adapters.StepAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
+import com.keyeswest.bake_v2.models.Step;
+import com.keyeswest.bake_v2.models.StepViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +42,8 @@ public class RecipeDetailFragment extends Fragment {
     RecyclerView mStepsRecyclerView;
 
     private IngredientsAdapter mIngredientsAdapter;
+    private StepAdapter mStepAdapter;
+
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -78,10 +84,17 @@ public class RecipeDetailFragment extends Fragment {
         setupIngredientAdapter();
 
 
+        mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mStepsRecyclerView.addItemDecoration(itemDecorator);
+
+        setupStepsAdapter();
 
 
         return view;
     }
+
+
+
 
 
     private void setupIngredientAdapter(){
@@ -91,6 +104,24 @@ public class RecipeDetailFragment extends Fragment {
             mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
 
         }
+    }
+
+    private void setupStepsAdapter(){
+
+        if (isAdded()){
+
+            mStepAdapter = new StepAdapter(mRecipe.getSteps(),new StepAdapter.OnStepClickListener(){
+
+                @Override
+                public void onStepClick(Step step) {
+                    Log.d(TAG, "Step selected");
+                }
+            });
+
+            mStepsRecyclerView.setAdapter(mStepAdapter);
+
+        }
+
     }
 
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="step" type="com.keyeswest.bake_v2.models.StepViewModel"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/step_thumb_image"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/step_thumb_iv"/>
+
+        <TextView
+            android:id="@+id/step_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin_quarter"
+            android:paddingTop="6dp"
+            android:layout_toEndOf="@id/step_thumb_iv"
+
+            android:text="@{step.getListLabel()}"
+            tools:text="Step Label" />
+
+
+    </RelativeLayout>
+
+</layout>
