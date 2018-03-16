@@ -66,12 +66,11 @@ public class RecipeDetailActivity extends AppCompatActivity
 
         mSelectedIndex = index;
         //phone scenario
-      //  Intent intent = StepDetailActivity.newIntent(this,
-      //          mRecipe.getSteps(), mSelectedIndex);
+        Intent intent = StepDetailActivity.newIntent(this,
+                mRecipe.getSteps(), mSelectedIndex);
 
-        // The result is the list of steps with updated check box states corresponding to user
-        // input when working with individual steps
-      //  startActivityForResult(intent, STEP_UPDATED_CODE);
+
+         startActivity(intent);
 
 
     }

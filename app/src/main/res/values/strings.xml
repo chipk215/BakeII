@@ -10,6 +10,9 @@
     <string name="btn_retry">Retry</string>
     <string name="internet_error">Not connected to internet</string>
 
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
     <!-- Ingredient Measures  -->
 
     <plurals name="gram_plural">
