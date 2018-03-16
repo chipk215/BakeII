@@ -2,15 +2,14 @@ package com.keyeswest.bake_v2.tasks;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
+
 import android.os.AsyncTask;
-import android.util.Log;
+
 
 import com.google.gson.Gson;
 import com.keyeswest.bake_v2.models.Recipe;
 
-
-import org.json.JSONArray;
+;
 
 
 import java.util.ArrayList;

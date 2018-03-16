@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
@@ -27,7 +30,7 @@ import butterknife.Unbinder;
 /**
  * Handles the displaying of recipes.
  */
-public class RecipeListFragment extends Fragment {
+public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorCallback {
 
     private static final String TAG = "RecipeListFragment";
 
@@ -36,14 +39,23 @@ public class RecipeListFragment extends Fragment {
     private RecipeAdapter mRecipeAdapter;
     private List<Recipe> mRecipes = new ArrayList<>();
 
-    private RecipeFactory mRecipeFactory = new RecipeFactory();
+    private RecipeFactory mRecipeFactory;
 
+    private OnRecipeSelected mListener;
 
 
     @BindView(R.id.recipe_recycler_view)
     RecyclerView mRecipeRecyclerView;
 
-    private OnRecipeSelected mListener;
+    @BindView(R.id.error_layout)
+    LinearLayout mErrorLayout;
+
+    @BindView(R.id.error_txt_cause)
+    TextView mErrorText;
+
+    @BindView(R.id.error_btn_retry)Button mRetryButton;
+
+
 
     public RecipeListFragment() {
         // Required empty public constructor
@@ -54,6 +66,7 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRecipeFactory = new RecipeFactory(this);
     }
 
     @Override
@@ -70,24 +83,31 @@ public class RecipeListFragment extends Fragment {
 
         setupRecipeAdapter();
 
+        fetchRecipes();
 
-
-        mRecipeFactory.readNetworkRecipes(getContext(),new RecipeJsonDeserializer.RecipeResultsCallback() {
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void recipeResult(List<Recipe> recipeList) {
-                mRecipes = recipeList;
-
-                // Updating the recipe adaptor is not working
-                //mRecipeAdapter.notifyDataSetChanged();
-
-                //creating a new adaptor does work, hmmm, why?
-                setupRecipeAdapter();
+            public void onClick(View v) {
+                fetchRecipes();
             }
         });
 
         return rootView;
     }
 
+
+    public void fetchRecipes(){
+        mErrorLayout.setVisibility(View.GONE);
+        mRecipeRecyclerView.setVisibility(View.VISIBLE);
+        mRecipeFactory.readNetworkRecipes(getContext(),new RecipeJsonDeserializer.RecipeResultsCallback() {
+            @Override
+            public void recipeResult(List<Recipe> recipeList) {
+                mRecipes = recipeList;
+
+                setupRecipeAdapter();
+            }
+        });
+    }
 
 
     @Override
@@ -133,6 +153,17 @@ public class RecipeListFragment extends Fragment {
         }else{
             Log.d(TAG, "Fragment NOT added, not setting up adapter");
 
+        }
+
+    }
+
+    @Override
+    public void downloadErrorOccurred() {
+
+        if (mErrorLayout.getVisibility() == View.GONE){
+            mErrorText.setText(getResources().getString(R.string.internet_error));
+            mErrorLayout.setVisibility(View.VISIBLE);
+            mRecipeRecyclerView.setVisibility(View.GONE);
         }
 
     }

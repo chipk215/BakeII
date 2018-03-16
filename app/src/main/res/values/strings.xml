@@ -6,6 +6,9 @@
     <string name="ingredients">Ingredients</string>
     <string name="recipe_steps">Recipe Steps</string>
     <string name="step_thumb_image">Step Thumbnail Image</string>
+    <string name="connection_error">Failed to fetch recipes.</string>
+    <string name="btn_retry">Retry</string>
+    <string name="internet_error">Not connected to internet</string>
 
     <!-- Ingredient Measures  -->
 

@@ -11,23 +11,38 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
-
+import com.keyeswest.bake_v2.utilities.NetworkUtilities;
 
 
 public class RecipeFactory {
+
     private static final String RECIPE_URL_STRING
             = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
+    public interface ErrorCallback{
+        void downloadErrorOccurred();
+    }
+
+    private ErrorCallback mErrorCallback;
+
     RequestQueue mRequestQueue;
 
+    private  RecipeFactory(){};
 
+    public RecipeFactory(ErrorCallback callback){
+        mErrorCallback = callback;
+    }
 
     public void readNetworkRecipes(final Context context,
                                    final RecipeJsonDeserializer.RecipeResultsCallback  results){
 
+        if (! NetworkUtilities.isNetworkAvailable(context)){
+            mErrorCallback.downloadErrorOccurred();
+        }
+
         mRequestQueue = Volley.newRequestQueue(context);
 
-        // use volley to fetch json data as a string since i already have a gson serializer set up
+        // Use volley to fetch json data as a string since I already have a gson serializer set up
         // which takes a string as input
         StringRequest recipeRequest = new StringRequest(Request.Method.GET,
                 RECIPE_URL_STRING,
@@ -46,7 +61,7 @@ public class RecipeFactory {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            // TODO handle network errors
+                            mErrorCallback.downloadErrorOccurred();
                         }
                     });
 
