@@ -87,9 +87,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
             if ((thumbnailURL != null) && (! thumbnailURL.isEmpty())){
                 Picasso.with(itemView.getContext()).load(thumbnailURL).into(mItemImageView, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
+                    public void onSuccess() {/* Required but not needed */}
 
                     @Override
                     public void onError() {
