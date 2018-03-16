@@ -38,7 +38,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     .add(R.id.recipe_detail_container,recipeFragment)
                     .commit();
 
+        }else{
+            mRecipe = savedInstanceState.getParcelable(SAVE_RECIPE_KEY);
         }
+
+        setTitle(mRecipe.getName());
     }
 
     @Override
