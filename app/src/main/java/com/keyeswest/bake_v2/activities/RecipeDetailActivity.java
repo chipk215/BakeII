@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.fragments.RecipeDetailFragment;
 import com.keyeswest.bake_v2.models.Recipe;
+import com.keyeswest.bake_v2.models.Step;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity
+        implements RecipeDetailFragment.OnStepSelected {
+
+    private static final String TAG = "RecipeDetailActivity";
 
     private static final String EXTRA_RECIPE_BUNDLE = "com.keyeswest.bake_v2.recipe";
     private static final String SAVE_RECIPE_KEY = "save_recipe";
@@ -20,6 +25,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_RECIPE_BUNDLE, recipe);
         return intent;
     }
+
+    private int mSelectedIndex;
 
     private Recipe mRecipe;
 
@@ -50,5 +57,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(SAVE_RECIPE_KEY, mRecipe);
+    }
+
+    @Override
+    public void onStepSelected(int index) {
+        // Either start an activity or update the two pane activity
+        Log.d(TAG, "Step selected: " + mRecipe.getSteps().get(index).getShortDescription());
+
+        mSelectedIndex = index;
+        //phone scenario
+      //  Intent intent = StepDetailActivity.newIntent(this,
+      //          mRecipe.getSteps(), mSelectedIndex);
+
+        // The result is the list of steps with updated check box states corresponding to user
+        // input when working with individual steps
+      //  startActivityForResult(intent, STEP_UPDATED_CODE);
+
+
     }
 }

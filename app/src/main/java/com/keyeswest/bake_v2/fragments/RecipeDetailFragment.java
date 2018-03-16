@@ -1,6 +1,7 @@
 package com.keyeswest.bake_v2.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -35,6 +36,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
+    private OnStepSelected mListener;
+
     @BindView(R.id.ingredients_recycler_view)
     RecyclerView mIngredientsRecyclerView;
 
@@ -57,6 +60,18 @@ public class RecipeDetailFragment extends Fragment {
         RecipeDetailFragment fragment = new RecipeDetailFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnStepSelected) {
+            mListener = (OnStepSelected) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnRecipeSelected");
+        }
     }
 
     @Override
@@ -96,7 +111,6 @@ public class RecipeDetailFragment extends Fragment {
 
 
 
-
     private void setupIngredientAdapter(){
         if (isAdded()){
             mIngredientsAdapter = new IngredientsAdapter(mRecipe.getIngredients());
@@ -113,8 +127,9 @@ public class RecipeDetailFragment extends Fragment {
             mStepAdapter = new StepAdapter(mRecipe.getSteps(),new StepAdapter.OnStepClickListener(){
 
                 @Override
-                public void onStepClick(Step step) {
+                public void onStepClick(int index) {
                     Log.d(TAG, "Step selected");
+                    mListener.onStepSelected(index);
                 }
             });
 
@@ -122,6 +137,16 @@ public class RecipeDetailFragment extends Fragment {
 
         }
 
+    }
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow the fragment to specify a selected step.
+     *
+     */
+    public interface OnStepSelected {
+        void onStepSelected(int index);
     }
 
 

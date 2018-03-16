@@ -26,7 +26,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
     private final static String TAG="StepAdapter";
 
     public interface OnStepClickListener{
-        void onStepClick(Step step);
+        void onStepClick(int index);
 
     }
 
@@ -50,8 +50,8 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
 
     @Override
     public void onBindViewHolder(StepHolder holder, int position) {
-        Step step =mSteps.get(position);
-        holder.bind(step);
+
+        holder.bind(position);
 
     }
 
@@ -61,7 +61,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
     }
 
     class StepHolder extends RecyclerView.ViewHolder{
-
+        int mPosition;
         private StepViewModel mStepViewModel;
         private final StepRowItemBinding mStepBinding;
         @BindView(R.id.step_thumb_iv) ImageView mItemImageView;
@@ -73,14 +73,16 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onStepClick(mStepViewModel.getStep());
+                    mListener.onStepClick(mPosition);
                 }
             });
 
 
         }
 
-        public void bind(final Step step){
+        public void bind(final int position){
+            mPosition = position;
+            Step step =mSteps.get(position);
             mStepViewModel = new StepViewModel(this.itemView.getContext(), step);
             mStepBinding.setStep(mStepViewModel);
             final String thumbnailURL = step.getThumbnailURL();
