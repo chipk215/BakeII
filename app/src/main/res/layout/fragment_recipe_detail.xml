@@ -1,7 +1,10 @@
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 <RelativeLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    >
 
     <TextView
         android:id="@+id/ingredient_label_tv"
@@ -32,11 +35,9 @@
         android:layout_below="@id/ingredient_steps_tv"/>
 
 
-
-
 </RelativeLayout>
 
 
-
+</ScrollView>
 
 
