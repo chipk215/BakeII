@@ -1,4 +1,4 @@
-package com.keyeswest.bake_v2.models;
+package com.keyeswest.bake_v2.utilities;
 
 
 import android.content.Context;

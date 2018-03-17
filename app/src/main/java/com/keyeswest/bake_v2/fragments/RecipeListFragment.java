@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
-import com.keyeswest.bake_v2.models.RecipeFactory;
+import com.keyeswest.bake_v2.utilities.RecipeFactory;
 import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 
 import java.util.ArrayList;

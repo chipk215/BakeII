@@ -1,0 +1,75 @@
+<RelativeLayout android:id="@+id/widget_layout"
+    android:background="@color/colorAccent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/list_label_tv"
+        style="@style/AppWidgetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        tools:text="list label" />
+
+    <TextView
+        android:id="@+id/recipe_name_tv"
+        style="@style/AppWidgetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin_quarter"
+        android:layout_toEndOf="@id/list_label_tv"
+        android:textStyle="italic"
+        tools:text="Name" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/colorAccent"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:text="@string/empty_list_view"
+        android:textSize="@dimen/empty_list_text_size" />
+
+    <ListView
+        android:id="@+id/item_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipe_btn"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/activity_margin_quarter"
+        android:loopViews="true" />
+
+    <Button
+        android:id="@+id/recipe_btn"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/list_label_tv"
+        android:layout_marginEnd="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/back_to_recipes"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+

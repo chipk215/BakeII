@@ -5,7 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 
 import com.keyeswest.bake_v2.models.Recipe;
-import com.keyeswest.bake_v2.models.RecipeFactory;
+import com.keyeswest.bake_v2.utilities.RecipeFactory;
 import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 
 import junit.framework.Assert;
