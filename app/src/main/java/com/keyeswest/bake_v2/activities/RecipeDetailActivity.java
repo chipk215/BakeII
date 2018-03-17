@@ -56,7 +56,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         if (savedInstanceState == null){
             mRecipe = getIntent().getExtras().getParcelable(EXTRA_RECIPE_BUNDLE);
 
-
         }else{
             mRecipe = savedInstanceState.getParcelable(SAVE_RECIPE_KEY);
         }
@@ -73,7 +72,19 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 .add(R.id.recipe_detail_container,recipeFragment)
                 .commit();
 
+        if (mTwoPane) {
+            // Add the step detail fragment for wide devices
+            StepDetailFragment stepFragment =
+                    StepDetailFragment.newInstance(mRecipe.getSteps().get(0),
+                            true, true);
 
+            if (fragmentManager.findFragmentById(R.id.step_detail_container) == null) {
+                // initial load of fragment
+                fragmentManager.beginTransaction()
+                        .add(R.id.step_detail_container, stepFragment)
+                        .commit();
+            }
+        }
 
     }
 
@@ -91,22 +102,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         Log.d(TAG, "Step selected: " + mRecipe.getSteps().get(index).getShortDescription());
         mSelectedIndex = index;
         if (mTwoPane){
-            // Add the step detail fragment for wide devices
             StepDetailFragment stepFragment =
                     StepDetailFragment.newInstance(mRecipe.getSteps().get(mSelectedIndex),
                             true, true);
-
             FragmentManager fragmentManager = getSupportFragmentManager();
-            if (fragmentManager.findFragmentById(R.id.step_detail_container) == null){
-                // initial load of fragment
-                fragmentManager.beginTransaction()
-                        .add(R.id.step_detail_container, stepFragment)
-                        .commit();
-            }else{
-                fragmentManager.beginTransaction()
+
+            fragmentManager.beginTransaction()
                         .replace(R.id.step_detail_container, stepFragment)
                         .commit();
-            }
 
         }else {
 
