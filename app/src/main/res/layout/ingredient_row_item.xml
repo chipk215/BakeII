@@ -8,8 +8,7 @@
     </data>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ListItemTextViewStyle"
         android:text="@{ingredient.getIngredientInfo()}"
         tools:text="Name Quantity Measure"/>
 

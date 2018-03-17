@@ -14,14 +14,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/backgroundColor"
         tools:context="com.keyeswest.bake.StepDetailActivity">
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:background="@color/colorAccent"
+            android:background="@color/backgroundColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

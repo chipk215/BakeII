@@ -19,7 +19,7 @@
                     android:layout_margin="@dimen/recipe_card_layout_margin"
                     android:elevation="2dp"
                     android:padding="@dimen/recipe_card_padding"
-                    card_view:cardBackgroundColor="@color/colorAccent"
+                    card_view:cardBackgroundColor="@color/primaryLightColor"
                     card_view:cardCornerRadius="@dimen/cardview_default_radius"
                     card_view:contentPadding="@dimen/activity_margin_half">
 
@@ -33,7 +33,7 @@
                             android:layout_marginTop="@dimen/activity_margin_half"
                             android:elevation="@dimen/recipe_card_text_elevation"
                             android:text="@{recipe.getName()}"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             tools:text="Recipe Name" />

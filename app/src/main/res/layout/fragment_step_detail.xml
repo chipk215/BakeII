@@ -12,7 +12,7 @@
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:background="@color/colorAccent"
+        android:background="@color/backgroundColor"
         app:layout_constraintBottom_toTopOf="@+id/horizontalHalf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +26,6 @@
         app:layout_constraintGuide_percent="0.5"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="256dp" />
-
-
-
 
 
 
@@ -52,6 +49,7 @@
         android:layout_height="wrap_content"
         android:text="@string/previous"
         android:visibility="visible"
+        style="@style/ButtonStyle"
         app:layout_constraintBaseline_toBaselineOf="@+id/next_button"
         app:layout_constraintEnd_toStartOf="@+id/next_button"
         app:layout_constraintHorizontal_bias="0.5"
@@ -63,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"
+        style="@style/ButtonStyle"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
