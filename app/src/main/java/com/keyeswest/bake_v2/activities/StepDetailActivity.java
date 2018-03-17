@@ -25,12 +25,15 @@ public class StepDetailActivity extends AppCompatActivity implements
     public static final String EXTRA_STEP_BUNDLE = "com.keyeswest.bake.step";
     public static final String STEPS_KEY = "stepsKey";
     public static final String SELECTED_INDEX_KEY="selectedIndexKey";
+    public static final String RECIPE_NAME_KEY = "recipeNameKey";
 
-    public static Intent newIntent(Context packageContext, List<Step> steps, int selectedIndex){
+    public static Intent newIntent(Context packageContext, List<Step> steps,
+                                   int selectedIndex, String recipeName){
         Intent intent = new Intent(packageContext, StepDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(STEPS_KEY, (ArrayList<Step>)steps);
         bundle.putInt(SELECTED_INDEX_KEY, selectedIndex);
+        bundle.putString(RECIPE_NAME_KEY, recipeName);
         intent.putExtra(EXTRA_STEP_BUNDLE, bundle);
 
         return intent;
@@ -38,6 +41,7 @@ public class StepDetailActivity extends AppCompatActivity implements
 
     private List<Step> mSteps;
     private int mSelectedIndex;
+    private String mRecipeName;
 
 
     @Override
@@ -62,6 +66,7 @@ public class StepDetailActivity extends AppCompatActivity implements
             Bundle bundle = getIntent().getParcelableExtra(EXTRA_STEP_BUNDLE);
             mSteps = bundle.getParcelableArrayList(STEPS_KEY);
             mSelectedIndex = bundle.getInt(SELECTED_INDEX_KEY);
+            mRecipeName = bundle.getString(RECIPE_NAME_KEY);
 
             stepDetailFragment = configureFragment();
 
@@ -69,6 +74,8 @@ public class StepDetailActivity extends AppCompatActivity implements
                     .add(R.id.step_detail_container, stepDetailFragment)
                     .commit();
         }
+
+        setTitle(mRecipeName);
 
 
     }

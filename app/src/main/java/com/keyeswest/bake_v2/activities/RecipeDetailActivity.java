@@ -112,7 +112,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
             //phone scenario
             Intent intent = StepDetailActivity.newIntent(this,
-                    mRecipe.getSteps(), mSelectedIndex);
+                    mRecipe.getSteps(), mSelectedIndex, mRecipe.getName());
 
             startActivity(intent);
         }
