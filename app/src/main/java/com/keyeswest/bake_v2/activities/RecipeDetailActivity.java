@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +49,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
 
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+
+
         if (savedInstanceState == null){
             mRecipe = getIntent().getExtras().getParcelable(EXTRA_RECIPE_BUNDLE);
 
@@ -74,9 +79,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
+        Log.d(TAG, "onSavedInstanceStateInvoked");
 
         savedInstanceState.putParcelable(SAVE_RECIPE_KEY, mRecipe);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
