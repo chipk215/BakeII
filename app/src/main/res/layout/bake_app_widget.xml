@@ -15,6 +15,8 @@
         android:textStyle="italic"
         tools:text="list label" />
 
+
+
     <TextView
         android:id="@+id/recipe_name_tv"
         style="@style/AppWidgetLabel"
@@ -24,6 +26,17 @@
         android:layout_toEndOf="@id/list_label_tv"
         android:textStyle="italic"
         tools:text="Name" />
+
+    <TextView
+        android:id="@+id/widget_id_tv"
+        style="@style/AppWidgetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/recipe_name_tv"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        tools:text="widget id" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/empty_view"

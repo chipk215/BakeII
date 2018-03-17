@@ -59,7 +59,7 @@ public class BakeAppWidget extends AppWidgetProvider {
 
         if (selectedRecipe.index == INVALID_INDEX) {
             // this is the path for displaying recipes
-            Log.d(TAG, "Proceeding down recipe path.");
+            Log.d(TAG, "Proceeding down recipe path. appWidgetId= " + appWidgetId);
 
             Intent intent = new Intent(context, RecipeWidgetService.class);
             // scheme -  widgetId:R|I, integer
@@ -71,6 +71,10 @@ public class BakeAppWidget extends AppWidgetProvider {
             views = new RemoteViews(context.getPackageName(), R.layout.bake_app_widget);
 
             views.setTextViewText(R.id.list_label_tv, context.getResources().getString(R.string.recipes));
+
+            //During debug set the visibility of the next line to VISIBLE to display the widget id
+            views.setViewVisibility(R.id.widget_id_tv, View.GONE);
+            views.setTextViewText(R.id.widget_id_tv, Integer.toString(appWidgetId));
 
             views.setViewVisibility(R.id.recipe_name_tv, View.GONE);
             views.setViewVisibility(R.id.recipe_btn, View.GONE);
@@ -94,14 +98,14 @@ public class BakeAppWidget extends AppWidgetProvider {
             selectIntent.setAction(BakeAppWidget.SELECT_ACTION);
             selectIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            PendingIntent selectRecipePendingIntent = PendingIntent.getBroadcast(context, 0, selectIntent,
+            PendingIntent selectRecipePendingIntent = PendingIntent.getBroadcast(context, appWidgetId, selectIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             views.setPendingIntentTemplate(R.id.item_list, selectRecipePendingIntent);
 
         }else{
             // this is the path for displaying ingredients
-            Log.d(TAG, "Proceeding down ingredients path.");
+            Log.d(TAG, "Proceeding down ingredients path, appWidgetId= " + appWidgetId);
 
             // show the ingredient list corresponding to the recipe
             Intent intent = new Intent(context, RecipeWidgetService.class);
@@ -120,6 +124,7 @@ public class BakeAppWidget extends AppWidgetProvider {
 
             views.setTextViewText(R.id.recipe_name_tv, selectedRecipe.recipeName);
             views.setViewVisibility(R.id.recipe_name_tv, View.VISIBLE);
+            views.setViewVisibility(R.id.widget_id_tv, View.GONE);
 
             views.setViewVisibility(R.id.recipe_btn, View.VISIBLE);
 
@@ -174,7 +179,7 @@ public class BakeAppWidget extends AppWidgetProvider {
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
 
-
+            Log.d(TAG, "Widget ID: "+ appWidgetId);
             int selectedRecipeViewIndex = intent.getIntExtra(EXTRA_ITEM_POSITION, INVALID_INDEX);
             String selectedRecipeName = intent.getStringExtra(EXTRA_ITEM_RECIPE_NAME);
 

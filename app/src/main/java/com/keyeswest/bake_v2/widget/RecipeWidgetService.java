@@ -3,13 +3,13 @@ package com.keyeswest.bake_v2.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.google.gson.Gson;
+
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.models.Ingredient;
 import com.keyeswest.bake_v2.models.IngredientViewModel;
@@ -18,10 +18,9 @@ import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 import com.keyeswest.bake_v2.utilities.RecipeFactory;
 
 
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 import java.util.List;
 
@@ -41,10 +40,9 @@ public class RecipeWidgetService extends RemoteViewsService {
     private static final int INVALID_INDEX = -1;
 
 
-
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
+        Log.d(TAG, "onGetViewFactory invoked");
         return new RecipeRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 
@@ -74,6 +72,8 @@ public class RecipeWidgetService extends RemoteViewsService {
          * ingredients and is used to simplify parsing.
          */
         RecipeRemoteViewsFactory(Context context, Intent intent){
+
+            Log.d(TAG, "RecipeRemoteViewsFactory constructor invoked");
             mContext = context;
 
             parseIntent(intent);
@@ -86,9 +86,7 @@ public class RecipeWidgetService extends RemoteViewsService {
                 }
             });
 
-            // Our implementation has no specific app widget dependencies, if it did
-            // the appWidgetId is contained in the intent
-            //String appWidgetId = scheme_specific_part.substring(0,colonIndex );
+
         }
 
 
@@ -171,6 +169,7 @@ public class RecipeWidgetService extends RemoteViewsService {
                 extras.putInt(BakeAppWidget.EXTRA_ITEM_POSITION, position);
                 extras.putString(BakeAppWidget.EXTRA_ITEM_RECIPE_NAME,mRecipes.get(position).getName());
                 Intent fillInIntent = new Intent();
+                fillInIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId);
                 fillInIntent.putExtras(extras);
                 remoteView.setOnClickFillInIntent(R.id.item, fillInIntent);
 
