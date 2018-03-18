@@ -16,7 +16,7 @@ import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 
 import java.util.List;
 
-import javax.inject.Inject;
+
 
 
 public class RecipeFactory {
@@ -35,7 +35,7 @@ public class RecipeFactory {
     RequestQueue mRequestQueue;
 
 
-    @Inject
+
     public RecipeFactory(){}
 
     public void readNetworkRecipes(final Context context,
