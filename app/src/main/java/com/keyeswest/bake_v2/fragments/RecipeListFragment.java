@@ -13,8 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.keyeswest.bake_v2.dependInjection.BakeComponent;
-import com.keyeswest.bake_v2.dependInjection.DependencyInjector;
+
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
@@ -24,7 +23,7 @@ import com.keyeswest.bake_v2.utilities.RecipeFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +43,7 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
     private RecipeAdapter mRecipeAdapter;
     private List<Recipe> mRecipes = new ArrayList<>();
 
-    @Inject
+
     RecipeFactory mRecipeFactory;
 
     private OnRecipeSelected mListener;
@@ -91,6 +90,7 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
 
         setupRecipeAdapter();
 
+        mRecipeFactory = new RecipeFactory();
         fetchRecipes();
 
         mRetryButton.setOnClickListener(new View.OnClickListener() {
@@ -123,12 +123,10 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
                     + " must implement OnRecipeSelected");
         }
 
-        onInject(DependencyInjector.bakeComponent());
+
     }
 
-    protected void onInject(BakeComponent applicationComponent) {
-        applicationComponent.inject(this);
-    }
+
 
     @Override
     public void onDetach() {
