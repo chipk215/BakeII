@@ -79,13 +79,7 @@ public class RecipeWidgetService extends RemoteViewsService {
             parseIntent(intent);
             mRecipes = new ArrayList<>();
             mIngredients = new ArrayList();
-            mRecipeFactory = new RecipeFactory(new RecipeFactory.ErrorCallback() {
-                @Override
-                public void downloadErrorOccurred() {
-                    Log.e(TAG, "Error loading recipes in widget.");
-                }
-            });
-
+            mRecipeFactory = new RecipeFactory();
 
         }
 
@@ -96,8 +90,12 @@ public class RecipeWidgetService extends RemoteViewsService {
         public void onCreate() {
             Log.d(TAG, "Entering onCreate in RecipeRemotesViewFactory");
 
-            // initiate reading recipe data
-            mRecipeFactory.readNetworkRecipes(mContext, new RecipeJsonDeserializer.RecipeResultsCallback() {
+            mRecipeFactory.readNetworkRecipes(mContext, new RecipeFactory.RecipeResultsCallback() {
+                @Override
+                public void downloadErrorOccurred() {
+                    Log.e(TAG, "Error loading recipes in widget.");
+                }
+
                 @Override
                 public void recipeResult(List<Recipe> recipeList) {
                     mRecipes = recipeList;
@@ -115,6 +113,7 @@ public class RecipeWidgetService extends RemoteViewsService {
 
                 }
             });
+
 
         }
 

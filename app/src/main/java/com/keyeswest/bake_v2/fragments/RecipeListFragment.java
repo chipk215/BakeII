@@ -13,24 +13,29 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.keyeswest.bake_v2.dependInjection.BakeComponent;
+import com.keyeswest.bake_v2.dependInjection.DependencyInjector;
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
 import com.keyeswest.bake_v2.utilities.RecipeFactory;
-import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
+
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
+
 /**
  * Handles the displaying of recipes.
  */
-public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorCallback {
+public class RecipeListFragment extends Fragment implements RecipeFactory.RecipeResultsCallback {
 
     private static final String TAG = "RecipeListFragment";
 
@@ -39,7 +44,8 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
     private RecipeAdapter mRecipeAdapter;
     private List<Recipe> mRecipes = new ArrayList<>();
 
-    private RecipeFactory mRecipeFactory;
+    @Inject
+    RecipeFactory mRecipeFactory;
 
     private OnRecipeSelected mListener;
 
@@ -65,8 +71,9 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        mRecipeFactory = new RecipeFactory(this);
+
     }
 
     @Override
@@ -76,6 +83,7 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_recipe_list,
                 container, false);
+
 
         mUnbinder = ButterKnife.bind(this, rootView);
         int columns = getResources().getInteger(R.integer.recipe_grid_columns);
@@ -99,15 +107,10 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
     public void fetchRecipes(){
         mErrorLayout.setVisibility(View.GONE);
         mRecipeRecyclerView.setVisibility(View.VISIBLE);
-        mRecipeFactory.readNetworkRecipes(getContext(),new RecipeJsonDeserializer.RecipeResultsCallback() {
-            @Override
-            public void recipeResult(List<Recipe> recipeList) {
-                mRecipes = recipeList;
-
-                setupRecipeAdapter();
-            }
-        });
+        mRecipeFactory.readNetworkRecipes(getContext(), this   );
     }
+
+
 
 
     @Override
@@ -119,6 +122,12 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
             throw new RuntimeException(context.toString()
                     + " must implement OnRecipeSelected");
         }
+
+        onInject(DependencyInjector.bakeComponent());
+    }
+
+    protected void onInject(BakeComponent applicationComponent) {
+        applicationComponent.inject(this);
     }
 
     @Override
@@ -165,6 +174,14 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.ErrorC
             mErrorLayout.setVisibility(View.VISIBLE);
             mRecipeRecyclerView.setVisibility(View.GONE);
         }
+
+    }
+
+    @Override
+    public void recipeResult(List<Recipe> recipeList) {
+        mRecipes = recipeList;
+
+        setupRecipeAdapter();
 
     }
 

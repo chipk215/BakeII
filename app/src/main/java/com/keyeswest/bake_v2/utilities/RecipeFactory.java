@@ -10,8 +10,13 @@ import com.android.volley.VolleyError;
 
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.keyeswest.bake_v2.models.Recipe;
 import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
-import com.keyeswest.bake_v2.utilities.NetworkUtilities;
+
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 
 public class RecipeFactory {
@@ -19,25 +24,25 @@ public class RecipeFactory {
     private static final String RECIPE_URL_STRING
             = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    public interface ErrorCallback{
+    public interface RecipeResultsCallback extends  RecipeJsonDeserializer.RecipeResultsCallback{
         void downloadErrorOccurred();
+
+        @Override
+        void recipeResult(List<Recipe> recipeList);
     }
 
-    private ErrorCallback mErrorCallback;
 
     RequestQueue mRequestQueue;
 
-    private  RecipeFactory(){};
 
-    public RecipeFactory(ErrorCallback callback){
-        mErrorCallback = callback;
-    }
+    @Inject
+    public RecipeFactory(){}
 
     public void readNetworkRecipes(final Context context,
-                                   final RecipeJsonDeserializer.RecipeResultsCallback  results){
+                                   final RecipeResultsCallback  results){
 
         if (! NetworkUtilities.isNetworkAvailable(context)){
-            mErrorCallback.downloadErrorOccurred();
+            results.downloadErrorOccurred();
         }
 
         mRequestQueue = Volley.newRequestQueue(context);
@@ -61,7 +66,7 @@ public class RecipeFactory {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            mErrorCallback.downloadErrorOccurred();
+                            results.downloadErrorOccurred();
                         }
                     });
 
