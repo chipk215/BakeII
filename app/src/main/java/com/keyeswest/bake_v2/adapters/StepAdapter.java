@@ -66,7 +66,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
         private final StepRowItemBinding mStepBinding;
         @BindView(R.id.step_thumb_iv) ImageView mItemImageView;
 
-        public StepHolder(StepRowItemBinding binding) {
+        StepHolder(StepRowItemBinding binding) {
             super(binding.getRoot());
             ButterKnife.bind(this,itemView);
             mStepBinding = binding;
@@ -76,8 +76,6 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder>{
                     mListener.onStepClick(mPosition);
                 }
             });
-
-
         }
 
         public void bind(final int position){

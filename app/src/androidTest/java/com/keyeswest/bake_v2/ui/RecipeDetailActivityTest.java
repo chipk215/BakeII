@@ -139,8 +139,4 @@ public class RecipeDetailActivityTest extends RecipeDataTest{
     }
 
 
-
-
-
-
 }

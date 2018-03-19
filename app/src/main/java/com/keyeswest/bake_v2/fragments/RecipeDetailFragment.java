@@ -3,6 +3,7 @@ package com.keyeswest.bake_v2.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,8 +18,6 @@ import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.IngredientsAdapter;
 import com.keyeswest.bake_v2.adapters.StepAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
-import com.keyeswest.bake_v2.models.Step;
-import com.keyeswest.bake_v2.models.StepViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,7 +82,7 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_recipe_detail,
@@ -108,7 +107,11 @@ public class RecipeDetailFragment extends Fragment {
         return view;
     }
 
-
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
 
 
     private void setupIngredientAdapter(){

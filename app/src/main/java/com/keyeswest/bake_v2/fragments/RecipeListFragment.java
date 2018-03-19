@@ -13,17 +13,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
 import com.keyeswest.bake_v2.utilities.RecipeFetcher;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,13 +37,12 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
     private Unbinder mUnbinder;
 
     private RecipeAdapter mRecipeAdapter;
-    private List<Recipe> mRecipes = new ArrayList<>();
 
+    private List<Recipe> mRecipes = new ArrayList<>();
 
     public RecipeFetcher mRecipeFetcher;
 
     private OnRecipeSelected mListener;
-
 
     @BindView(R.id.recipe_recycler_view)
     RecyclerView mRecipeRecyclerView;
@@ -60,19 +55,15 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
 
     @BindView(R.id.error_btn_retry)Button mRetryButton;
 
-
-
     public RecipeListFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -120,10 +111,7 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
             throw new RuntimeException(context.toString()
                     + " must implement OnRecipeSelected");
         }
-
-
     }
-
 
 
     @Override
@@ -132,12 +120,12 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
         mListener = null;
     }
 
+
     @Override
     public void onDestroyView(){
         super.onDestroyView();
         mUnbinder.unbind();
     }
-
 
 
     private void setupRecipeAdapter(){
@@ -159,8 +147,9 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
             Log.d(TAG, "Fragment NOT added, not setting up adapter");
 
         }
-
     }
+
+
 
     @Override
     public void downloadErrorOccurred() {
@@ -170,7 +159,6 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
             mErrorLayout.setVisibility(View.VISIBLE);
             mRecipeRecyclerView.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -178,8 +166,9 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
         mRecipes = recipeList;
 
         setupRecipeAdapter();
-
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -13,9 +13,7 @@ import com.android.volley.toolbox.Volley;
 import com.keyeswest.bake_v2.models.Recipe;
 import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 
-
 import java.util.List;
-
 
 
 
@@ -32,10 +30,6 @@ public class RecipeFetcher {
     }
 
 
-    RequestQueue mRequestQueue;
-
-
-
     public RecipeFetcher(){}
 
     public void readNetworkRecipes(final Context context,
@@ -45,7 +39,7 @@ public class RecipeFetcher {
             results.downloadErrorOccurred();
         }
 
-        mRequestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         // Use volley to fetch json data as a string since I already have a gson serializer set up
         // which takes a string as input
@@ -70,7 +64,7 @@ public class RecipeFetcher {
                         }
                     });
 
-        mRequestQueue.add(recipeRequest);
+        requestQueue.add(recipeRequest);
 
     }
 
