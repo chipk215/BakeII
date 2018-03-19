@@ -50,4 +50,5 @@
     <string name="recipes">Recipes</string>
     <string name="empty_list_view">Empty List</string>
     <string name="back_to_recipes">Back to recipe list</string>
+    <string name="right_chevron">right_chevron</string>
 </resources>
