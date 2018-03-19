@@ -19,7 +19,7 @@ import java.util.List;
 
 
 
-public class RecipeFactory {
+public class RecipeFetcher {
 
     private static final String RECIPE_URL_STRING
             = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
@@ -36,7 +36,7 @@ public class RecipeFactory {
 
 
 
-    public RecipeFactory(){}
+    public RecipeFetcher(){}
 
     public void readNetworkRecipes(final Context context,
                                    final RecipeResultsCallback  results){

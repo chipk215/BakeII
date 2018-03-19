@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.adapters.RecipeAdapter;
 import com.keyeswest.bake_v2.models.Recipe;
-import com.keyeswest.bake_v2.utilities.RecipeFactory;
+import com.keyeswest.bake_v2.utilities.RecipeFetcher;
 
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import butterknife.Unbinder;
 /**
  * Handles the displaying of recipes.
  */
-public class RecipeListFragment extends Fragment implements RecipeFactory.RecipeResultsCallback {
+public class RecipeListFragment extends Fragment implements RecipeFetcher.RecipeResultsCallback {
 
     private static final String TAG = "RecipeListFragment";
 
@@ -44,7 +44,7 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
     private List<Recipe> mRecipes = new ArrayList<>();
 
 
-    RecipeFactory mRecipeFactory;
+    public RecipeFetcher mRecipeFetcher;
 
     private OnRecipeSelected mListener;
 
@@ -90,7 +90,7 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
 
         setupRecipeAdapter();
 
-        mRecipeFactory = new RecipeFactory();
+        mRecipeFetcher = new RecipeFetcher();
         fetchRecipes();
 
         mRetryButton.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +107,8 @@ public class RecipeListFragment extends Fragment implements RecipeFactory.Recipe
     public void fetchRecipes(){
         mErrorLayout.setVisibility(View.GONE);
         mRecipeRecyclerView.setVisibility(View.VISIBLE);
-        mRecipeFactory.readNetworkRecipes(getContext(), this   );
+        mRecipeFetcher.readNetworkRecipes(getContext(), this   );
     }
-
-
 
 
     @Override

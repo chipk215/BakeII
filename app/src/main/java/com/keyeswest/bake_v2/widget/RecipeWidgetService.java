@@ -14,9 +14,7 @@ import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.models.Ingredient;
 import com.keyeswest.bake_v2.models.IngredientViewModel;
 import com.keyeswest.bake_v2.models.Recipe;
-import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
-import com.keyeswest.bake_v2.utilities.RecipeFactory;
-
+import com.keyeswest.bake_v2.utilities.RecipeFetcher;
 
 
 import java.util.ArrayList;
@@ -57,7 +55,7 @@ public class RecipeWidgetService extends RemoteViewsService {
         private List<Recipe> mRecipes;
         private List<Ingredient> mIngredients;
 
-        private RecipeFactory mRecipeFactory;
+        private RecipeFetcher mRecipeFetcher;
 
         private int mWidgetId;
 
@@ -79,7 +77,7 @@ public class RecipeWidgetService extends RemoteViewsService {
             parseIntent(intent);
             mRecipes = new ArrayList<>();
             mIngredients = new ArrayList();
-            mRecipeFactory = new RecipeFactory();
+            mRecipeFetcher = new RecipeFetcher();
 
         }
 
@@ -90,7 +88,7 @@ public class RecipeWidgetService extends RemoteViewsService {
         public void onCreate() {
             Log.d(TAG, "Entering onCreate in RecipeRemotesViewFactory");
 
-            mRecipeFactory.readNetworkRecipes(mContext, new RecipeFactory.RecipeResultsCallback() {
+            mRecipeFetcher.readNetworkRecipes(mContext, new RecipeFetcher.RecipeResultsCallback() {
                 @Override
                 public void downloadErrorOccurred() {
                     Log.e(TAG, "Error loading recipes in widget.");
