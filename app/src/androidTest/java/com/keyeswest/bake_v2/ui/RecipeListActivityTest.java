@@ -1,6 +1,5 @@
 package com.keyeswest.bake_v2.ui;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -8,13 +7,10 @@ import android.support.test.runner.AndroidJUnit4;
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.activities.RecipeListActivity;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
