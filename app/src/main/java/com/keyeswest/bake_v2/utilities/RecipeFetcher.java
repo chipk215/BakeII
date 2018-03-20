@@ -17,6 +17,7 @@ import com.keyeswest.bake_v2.tasks.RecipeJsonDeserializer;
 
 import java.util.List;
 
+import javax.inject.Inject;
 
 
 public class RecipeFetcher {
@@ -35,7 +36,7 @@ public class RecipeFetcher {
         void recipeResult(List<Recipe> recipeList);
     }
 
-
+    @Inject
     public RecipeFetcher(){}
 
     public void readNetworkRecipes(final Context context,

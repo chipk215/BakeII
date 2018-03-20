@@ -21,10 +21,12 @@ import com.keyeswest.bake_v2.utilities.RecipeFetcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
+import dagger.android.support.AndroidSupportInjection;
 
 
 /**
@@ -40,6 +42,7 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
 
     private List<Recipe> mRecipes = new ArrayList<>();
 
+    @Inject
     public RecipeFetcher mRecipeFetcher;
 
     private OnRecipeSelected mListener;
@@ -81,7 +84,7 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
 
         setupRecipeAdapter();
 
-        mRecipeFetcher = new RecipeFetcher();
+      //  mRecipeFetcher = new RecipeFetcher();
         fetchRecipes();
 
         mRetryButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +107,8 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
 
     @Override
     public void onAttach(Context context) {
+
+        AndroidSupportInjection.inject(this);
         super.onAttach(context);
         if (context instanceof OnRecipeSelected) {
             mListener = (OnRecipeSelected) context;
@@ -167,6 +172,7 @@ public class RecipeListFragment extends Fragment implements RecipeFetcher.Recipe
 
         setupRecipeAdapter();
     }
+
 
 
 
