@@ -61,6 +61,7 @@ public class StepDetailActivity extends AppCompatActivity implements
         if (savedInstanceState != null){
             mSteps = savedInstanceState.getParcelableArrayList(STEPS_KEY);
             mSelectedIndex = savedInstanceState.getInt(SELECTED_INDEX_KEY);
+            mRecipeName = savedInstanceState.getString(RECIPE_NAME_KEY);
 
         }else {
             Bundle bundle = getIntent().getParcelableExtra(EXTRA_STEP_BUNDLE);
@@ -157,6 +158,7 @@ public class StepDetailActivity extends AppCompatActivity implements
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putParcelableArrayList(STEPS_KEY, (ArrayList<Step>)mSteps);
         savedInstanceState.putInt(SELECTED_INDEX_KEY, mSelectedIndex);
+        savedInstanceState.putString(RECIPE_NAME_KEY, mRecipeName);
     }
 
 
