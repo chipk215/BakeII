@@ -1,12 +1,17 @@
 package com.keyeswest.bake_v2.ui;
 
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingRegistry;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.keyeswest.bake_v2.R;
 import com.keyeswest.bake_v2.activities.RecipeListActivity;
+import com.keyeswest.bake_v2.utilities.EspressoTestingIdlingResource;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,16 +32,22 @@ public class RecipeListActivityTest {
     public ActivityTestRule<RecipeListActivity> mActivityTestRule =
             new ActivityTestRule<>(RecipeListActivity.class, false, false);
 
+
+
     @Before
     public void init() throws InterruptedException{
         mActivityTestRule.launchActivity(null);
 
-        // I'm finding I have to delay between tests. I suspect the culprit is with the asynch
-        // network fetching of recipe data.  The best fix, I think is to inject a fake
-        // resource fetcher so that the network access is eliminated during testing.
 
+        // I would rather use an injected fake RecipeFetcher an eliminate network calls ...
 
-        Thread.sleep(300);
+        // let espresso know to synchronize with background tasks
+        IdlingRegistry.getInstance().register(EspressoTestingIdlingResource.getIdlingResource());
+    }
+
+    @After
+    public void unregisterIdlingResource(){
+        IdlingRegistry.getInstance().unregister(EspressoTestingIdlingResource.getIdlingResource());
     }
 
 
