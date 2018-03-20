@@ -89,39 +89,15 @@ public class StepDetailActivity extends AppCompatActivity implements
             case android.R.id.home:
 
 
-                // From researching the up button, the parent activity will be re-created and
-                // there is no saved instance state for the parent activity like on a configuration
-                // change.
-                //
-                // This activity does not have the information to start the parent activity from
-                // scratch, the selected recipe isn't known without providing it to this activity.
-                //
-                // I can think of three options:
-                //  1. In our case the temporal back navigation is the same as hierarchical
-                //     navigation so just use the same back button navigation method.
-                //  2. Provide the recipe associated with the steps to this activity and then
-                //     use getParentActivityIntent and augment the intent with the recipe data.
-                //     A step could hold a reference to its container recipe or the recipe could
-                //     be provided as part of the intent for this activity.
-                //  3. Don't use this activity in the narrow screen device (phone) at all but
-                //     replace the fragment in the  parent RecipeDetailFragment with a fragment
-                //     like in the wide screen device.  To me this seems like a different
-                //     architecture analogous to a single page web app. In an extreme couldn't all
-                //     apps be written with just one activity and programmatically maintain the
-                //     fragment back stack? But why? In the Android_Me project a new activity
-                //     was created for the phone scenario in this case (so I'm following suit)
-                //
-                onBackPressed();  // I chose option 1 (obviously)
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                NavUtils.navigateUpTo(this, upIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 
     /**
      * User wants the next Step in the recipe
