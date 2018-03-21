@@ -8,7 +8,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+       // testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.keyeswest.bake_v2.ui.MockTestRunner"
     }
     buildTypes {
         release {
@@ -22,6 +23,15 @@ android {
     }
 
 }
+
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name == "debug") {
+        def aptOutputDir = new File(buildDir, "generated/source/apt/${variant.unitTestVariant.dirName}")
+        variant.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+        assembleDebug.finalizedBy('assembleDebugUnitTest')
+    }
+}
+
 
 
 
@@ -47,16 +57,21 @@ dependencies {
     // Force usage of dependencies in the test app, since it is internally used by the runner module.
     androidTestCompile 'com.android.support:support-annotations:25.4.0'
 
-
-
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     compile 'com.android.support:support-v4:27.0.2'
 
 
 
+    //Dagger Application
     compile 'com.google.dagger:dagger:2.13'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
     compile 'com.google.dagger:dagger-android-support:2.13'
+
+    //Dagger test
+
+    androidTestAnnotationProcessor'com.google.dagger:dagger-compiler:2.13'
+    testCompile 'com.google.dagger:dagger:2.13'
+
 }
